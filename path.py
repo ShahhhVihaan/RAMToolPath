@@ -66,9 +66,8 @@ class Planner():
 
 
 if __name__ == "__main__":
-    a = Planner('sample_gcode/test.gcode')
-    a.read_gcode()
-    a.generate()
+    path = Planner('sample_gcode/test.gcode')
+    path.generate()
     
-    for i, j, k, w in a.generate():
-        print(i, j)
+    for x, y, z, command in path.generate():
+        print(x, y)
