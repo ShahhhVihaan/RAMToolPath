@@ -66,7 +66,7 @@ class Planner():
 
 
 if __name__ == "__main__":
-    a = Planner('sample_gcode/setup.gcode')
+    a = Planner('sample_gcode/test.gcode')
     a.read_gcode()
     a.generate()
     

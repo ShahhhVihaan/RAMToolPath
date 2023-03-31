@@ -13,7 +13,7 @@ class TestPath(unittest.TestCase):
         pass
 
     def testLineGetParams(self):
-        a = Planner('sample_gcode/setup.gcode')
+        a = Planner('sample_gcode/test.gcode')
         for i, j in a.generate():
             print(i, j)
 

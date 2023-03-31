@@ -10,7 +10,7 @@ class App(tk.Frame):
         self.create_widgets()
 
         # Initialize a Planner object with a G-code file path
-        self.planner = Planner('sample_gcode/setup.gcode')
+        self.planner = Planner('sample_gcode/test.gcode')
 
         # Initialize the starting coordinates
         self.start_x, self.start_y, self.start_z = 0, 0, 0
