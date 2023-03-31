@@ -10,7 +10,7 @@ class Planner():
         dec_limit: maximum deceleration of the arm
         speed_limit: maximum speed of the arm 
         '''
-        self.x, self.y, self.z, self.f = 0, 0, 0, 0
+        self.x, self.y, self.z, self.f, self.e = 0, 0, 0, 0, 0
         self.file_path = file_path
         self.gcode = self.read_gcode(file_path)
         
@@ -25,41 +25,40 @@ class Planner():
     
     
     def generate(self):
-        ''' Go line by line of the gcode file and generate the path
+        ''' Calls the appropriate function based on the gcode command
+            Example: 'G0' -> self.G0(line)
         '''
         for line in self.gcode:
             try:
                 command = getattr(self, line.command_str)
-                return command(line)
+                yield command(line)
             except AttributeError:
                 print('Command not recognized: {}'.format(line.command_str))
 
     
     def line_get_params(self, line):
-        if line.get_param('X'):
-            x = line.get_param('X')
-        if line.get_param('Y'):
-            y = line.get_param('Y')
-        if line.get_param('Z'):
-            z = line.get_param('Z')
-        if line.get_param('F'):
-            f = line.get_param('F')
-        
-        return x, y, z, f
-        
-    def not_found(self, line):
-        return 'Command not recognized: {}'.format(line.command_str)
-    
+        x = line.get_param('X') if line.get_param('X') is not None else self.x
+        y = line.get_param('Y') if line.get_param('Y') is not None else self.y
+        z = line.get_param('Z') if line.get_param('Z') is not None else self.z
+        f = line.get_param('F') if line.get_param('F') is not None else self.f
+        e = line.get_param('E') if line.get_param('E') is not None else self.e
+
+        return x, y
+            
     def G28(self, line):
         pass
     
     def G0(self, line):
-        new_x, new_y, new_z, new_f = self.line_get_params(line)
-        return new_x, new_y
+        t = self.line_get_params(line)
+        return t[0], t[1]
     
     def G1(self, line):
-        new_x, new_y, new_z, new_f = self.line_get_params(line)
-        return new_x, new_y
+        t = self.line_get_params(line)
+        return t[0], t[1]
 
-if "__main__" == __name__:
-    parser()
+
+if __name__ == "__main__":
+    a = Planner('sample_gcode/setup.gcode')
+    
+    for i, j in a.generate():
+        print(i, j)
