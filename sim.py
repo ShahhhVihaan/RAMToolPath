@@ -1,5 +1,7 @@
 from path import Planner
 import tkinter as tk
+import matplotlib.pyplot as plt
+
 import time
 
 class App(tk.Frame):
@@ -68,6 +70,29 @@ class App(tk.Frame):
                     
         # Remove the next layer button after all commands have been executed
         self.next_layer_button.destroy()
+        
+        
+    # def start_trace(self):
+    #     # extract maps from file
+    #     import pickle
+
+    #     arm1_cardinal_map = {}
+
+    #     try:
+    #         # read dictionary from pkl file
+    #         with open('cardinal_maps/arm1_cardinal_map_14.pkl', 'rb') as fp:
+    #             arm1_cardinal_map = pickle.load(fp)
+    #             print(f"dictionary loaded successfully from file")
+    #     except FileNotFoundError:
+    #         print(f"file not found")
+        
+    #     for i in range(len(arm1_cardinal_map)):
+    #         x, y = arm1_cardinal_map[i]
+    #         x=x*self.scale_factor + 50
+    #         y=y*self.scale_factor + 200
+    #         size = 0.5
+    #         self.canvas.create_oval(x-size, y-size, x+size, y+size, fill="black", tags="trace")
+    #         self.canvas.update()
         
         
     def next_layer(self):
